@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Découvre ton Pokémon de l'âme</title>
+
+    <!-- Lien vers Google Fonts pour utiliser la police Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="arcko.png">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('fond.jpg') no-repeat center center/cover;
+            background-size: cover;
+            color: white;
+            font-family: 'Roboto', sans-serif; /* Applique la police Roboto à tout le corps de la page */
+        }
+
+        .container {
+            padding: 40px;
+            width: 70%;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            padding-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.5s ease, background 0.5s ease, backdrop-filter 0.5s ease;
+        }
+
+        .container:hover {
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: none;
+        }
+
+
+        .mascotte {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            height: 200px;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .mascotte:hover {
+            transform: scale(1.25);
+            opacity: 0.8; /* Légère transparence pour éviter un effet de superposition */
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .question {
+            font-size: 1.2em; /* Réduit la taille de la question */
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .answer-btn {
+            background: linear-gradient(135deg, #3498db, #9b59b6);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 80%;
+            transition: transform 0.3s ease;
+        }
+
+        .answer-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade {
+            animation: fadeIn 1s forwards;
+        }
+
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <a href="https://www.instagram.com/gasp_offrt/" target="_blank">
+        <img id="mascotte" src="mascotte1.gif" class="mascotte" alt="Mascotte">
+    </a>
+    
+
+    <audio id="background-music" loop>
+        <source src="sigma_boy.mp3" type="audio/mp3">
+        Ton navigateur ne supporte pas la lecture audio.
+    </audio>
+
+    <div class="container fade" id="quiz-container">
+        <h1>Découvre ton Pokémon</h1>
+        <div id="questions-container">
+            <div class="question fade" id="q1">
+                <p>1. Quel type de Pokémon préfères-tu ?</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(1, 'a')">🔥 Combat</button>
+                    <button class="answer-btn" onclick="nextQuestion(1, 'b')">🌊 Psy</button>
+                    <button class="answer-btn" onclick="nextQuestion(1, 'c')">🌿 Poison</button>
+                    <button class="answer-btn" onclick="nextQuestion(1, 'd')">⚡ Ténébre</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q2">
+                <p>2. Où aimerais-tu vivre ?</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(2, 'a')">🏕️ Dans la nature</button>
+                    <button class="answer-btn" onclick="nextQuestion(2, 'b')">🏙️ En ville</button>
+                    <button class="answer-btn" onclick="nextQuestion(2, 'c')">🏔️ En montagne</button>
+                    <button class="answer-btn" onclick="nextQuestion(2, 'd')">🏖️ Sur une île</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q3">
+                <p>3. Comment réagis-tu face à un défi ?</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(3, 'a')">⚔️ Je fonce !</button>
+                    <button class="answer-btn" onclick="nextQuestion(3, 'b')">🧠 Je réfléchis avant d’agir</button>
+                    <button class="answer-btn" onclick="nextQuestion(3, 'c')">🤝 Je cherche de l’aide</button>
+                    <button class="answer-btn" onclick="nextQuestion(3, 'd')">😎 J’improvise</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q4">
+                <p>4. Quelle est ta plus grande qualité ?</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(4, 'a')">💪 Courage</button>
+                    <button class="answer-btn" onclick="nextQuestion(4, 'b')">🧠 Intelligence</button>
+                    <button class="answer-btn" onclick="nextQuestion(4, 'c')">❤️ Gentillesse</button>
+                    <button class="answer-btn" onclick="nextQuestion(4, 'd')">🎭 Créativité</button>
+                </div>
+            </div>
+            
+            <div class="question hidden" id="q5">
+                <p>5. Quel est ton rythme de vie :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(5, 'd')">🏃‍♂️ Hyperactif, toujours en mouvement</button>
+                    <button class="answer-btn" onclick="nextQuestion(5, 'b')">🛌 Chill, je prends mon temps</button>
+                    <button class="answer-btn" onclick="nextQuestion(5, 'c')">🎯 Organisé, tout est planifié</button>
+                    <button class="answer-btn" onclick="nextQuestion(5, 'a')">🔄 Un mélange des trois</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q6">
+                <p>6. Quel élément naturel t’attire le plus :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(6,'a')">🔥 Lave</button>
+                    <button class="answer-btn" onclick="nextQuestion(6,'b')">🌊 Glace</button>
+                    <button class="answer-btn" onclick="nextQuestion(6,'c')">🌿 Forêt</button>
+                    <button class="answer-btn" onclick="nextQuestion(6,'d')">🌪️ Foudre</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q7">
+                <p>7. Choisis un type de repas que tu préfères :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(7,'a')">🍖 Un bon barbecue</button>
+                    <button class="answer-btn" onclick="nextQuestion(7,'b')">🍣 Du poisson frais</button>
+                    <button class="answer-btn" onclick="nextQuestion(7,'c')">🥗 Un repas sain et équilibré</button>
+                    <button class="answer-btn" onclick="nextQuestion(7,'d')">🍕 De la junk food</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q8">
+                <p>8. Quel est ton plus grand atout en combat :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(8,'d')">⚡ Ma rapidité</button>
+                    <button class="answer-btn" onclick="nextQuestion(8,'c')">🛡️ Ma défense</button>
+                    <button class="answer-btn" onclick="nextQuestion(8,'b')">🧠 Mon intelligence</button>
+                    <button class="answer-btn" onclick="nextQuestion(8,'a')">💥 Ma force brute</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q9">
+                <p>9. Si tu étais un dresseur Pokémon, quel serait ton objectif :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(9,'a')">🏆 Devenir le plus fort</button>
+                    <button class="answer-btn" onclick="nextQuestion(9,'c')">📚 Découvrir tous les mystères du monde Pokémon</button>
+                    <button class="answer-btn" onclick="nextQuestion(9,'d')">💕 Créer un lien puissant avec mes Pokémon</button>
+                    <button class="answer-btn" onclick="nextQuestion(9,'b')">🎨 M’exprimer à travers des concours et des défis</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q10">
+                <p>10. Quelle musique te donne le plus d’énergie :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(10,'a')">🎸 Rock entraînant</button>
+                    <button class="answer-btn" onclick="nextQuestion(10,'c')">🎶 Musique relaxante</button>
+                    <button class="answer-btn" onclick="nextQuestion(10,'d')">🎧 Electro/dance</button>
+                    <button class="answer-btn" onclick="nextQuestion(10,'b')">🎻 Classique ou épique</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q11">
+                <p>11. Si tu devais partir en voyage Pokémon, où irais-tu :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(11,'a')">Une île tropicale 🌴</button>
+                    <button class="answer-btn" onclick="nextQuestion(11,'d')">Une grande ville animée 🏙️</button>
+                    <button class="answer-btn" onclick="nextQuestion(11,'c')">Une forêt mystérieuse 🌲</button>
+                    <button class="answer-btn" onclick="nextQuestion(11,'b')">Une montagne enneigée ❄️</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q12">
+                <p>12. Si tu pouvais vivre dans un des lieux emblématiques du monde Pokémon, lequel choisirais-tu :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(12,'a')">Bourg Palette (un endroit paisible pour commencer une aventure) 🌿</button>
+                    <button class="answer-btn" onclick="nextQuestion(12,'b')">Lavanville (une ville sinistre) 🌆</button>
+                    <button class="answer-btn" onclick="nextQuestion(12,'c')">Cimetronelle (en pleine nature, dans les arbres) 🌳</button>
+                    <button class="answer-btn" onclick="nextQuestion(12,'d')">Illumis (une grande ville avec beaucoup de culture) 🎭</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q13">
+                <p>13. Si tu pouvais avoir une seule capacité, laquelle choisirais-tu :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(13,'a')">Voler dans les airs ✈️</button>
+                    <button class="answer-btn" onclick="nextQuestion(13,'b')">Respirer sous l’eau 🌊</button>
+                    <button class="answer-btn" onclick="nextQuestion(13,'d')">Courir à la vitesse de l’éclair ⚡</button>
+                    <button class="answer-btn" onclick="nextQuestion(13,'c')">Devenir invisible 👻</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q14">
+                <p>14. Quelle est la meilleure stratégie en combat Pokémon :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(14,'d')">Attaquer en premier 💥</button>
+                    <button class="answer-btn" onclick="nextQuestion(14,'b')">Affaiblir l’adversaire lentement 🎭</button>
+                    <button class="answer-btn" onclick="nextQuestion(14,'c')">Se protéger et riposter 🛡️</button>
+                    <button class="answer-btn" onclick="nextQuestion(14,'a')">Surprendre avec des attaques inattendues 🎭</button>
+                </div>
+            </div>
+
+            <div class="question hidden" id="q15">
+                <p>15. Si tu devais choisir un starter parmi ces classiques, lequel prendrais-tu :</p>
+                <div class="answers">
+                    <button class="answer-btn" onclick="nextQuestion(15,'a')">Ouisticram</button>
+                    <button class="answer-btn" onclick="nextQuestion(15,'b')">Grenouss</button>
+                    <button class="answer-btn" onclick="nextQuestion(15,'c')">Arcko</button>
+                    <button class="answer-btn" onclick="nextQuestion(15,'d')">Pikachu</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let scores = { a: 0, b: 0, c: 0, d: 0 };
+        const totalQuestions = 15;
+
+        const mascottesDimensions = {
+            1: { width: 100, height: 20 },
+            2: { width: 220, height: 135 },
+            3: { width: 210, height: 140 },
+            4: { width: 160, height: 180 },
+            5: { width: 180, height: 180 },
+            6: { width: 240, height: 180 },
+            7: { width: 250, height: 230 },
+            8: { width: 180, height: 170 },
+            9: { width: 180, height: 180 },
+            10: { width: 180, height: 180 },
+            11: { width: 180, height: 180 },
+            12: { width: 180, height: 180 },
+            13: { width: 130, height: 130 },
+            14: { width: 240, height: 240 },
+            15: { width: 170, height: 170 },
+        }
+
+        function changeMascotte(questionNumber) {
+            const mascotte = document.getElementById('mascotte');
+            let newMascotte = '';
+            mascotteDims = mascottesDimensions[1];
+
+            switch(questionNumber) {
+                case 1: newMascotte = 'mascotte1.gif';mascotteDims = mascottesDimensions[1];break
+                case 2: newMascotte = 'mascotte2.gif';mascotteDims = mascottesDimensions[2];break
+                case 3: newMascotte = 'mascotte3.gif';mascotteDims = mascottesDimensions[3];break
+                case 4: newMascotte = 'mascotte4.gif';mascotteDims = mascottesDimensions[4];break
+                case 5: newMascotte = 'mascotte5.gif';mascotteDims = mascottesDimensions[5];break
+                case 6: newMascotte = 'mascotte6.gif';mascotteDims = mascottesDimensions[6];break
+                case 7: newMascotte = 'mascotte7.gif';mascotteDims = mascottesDimensions[7];break
+                case 8: newMascotte = 'mascotte8.gif';mascotteDims = mascottesDimensions[8];break
+                case 9: newMascotte = 'mascotte9.gif';mascotteDims = mascottesDimensions[9];break
+                case 10: newMascotte = 'mascotte10.gif';mascotteDims = mascottesDimensions[10];break
+                case 11: newMascotte = 'mascotte11.gif';mascotteDims = mascottesDimensions[11];break
+                case 12: newMascotte = 'mascotte12.gif';mascotteDims = mascottesDimensions[12];break
+                case 13: newMascotte = 'mascotte13.gif';mascotteDims = mascottesDimensions[13];break
+                case 14: newMascotte = 'mascotte14.gif';mascotteDims = mascottesDimensions[14];break
+                case 15: newMascotte = 'mascotte15.gif';mascotteDims = mascottesDimensions[15];break
+                // Ajouter d'autres cas pour chaque question...
+                default: newMascotte = 'arcko.jpg'; break;
+            }
+
+            mascotte.src = newMascotte;
+
+            mascotte.onload = () => {
+                mascotte.style.width = `${mascotteDims.width}px`;
+                mascotte.style.height = `${mascotteDims.height}px`;
+        };
+    }
+
+    function nextQuestion(questionNumber, answer) {
+        scores[answer] += questionNumber;
+
+        // Stocker le score dans localStorage
+        localStorage.setItem(answer, scores[answer]);
+
+        console.log(`Scores après la question ${questionNumber}:`);
+        console.log(`a: ${scores.a}, b: ${scores.b}, c: ${scores.c}, d: ${scores.d}`);
+
+        let currentQ = document.getElementById(`q${questionNumber}`);
+        currentQ.classList.add("fade-out");
+
+        setTimeout(() => {
+            currentQ.classList.add("hidden");
+            currentQ.classList.remove("fade-out");
+
+            let nextQ = document.getElementById(`q${questionNumber + 1}`);
+            if (nextQ) {
+                nextQ.classList.remove("hidden");
+                nextQ.classList.add("fade");
+                changeMascotte(questionNumber + 1); // Changer la mascotte à chaque nouvelle question
+            } else {
+                saveResultAndRedirect();
+            }
+        }, 500);
+    }
+
+        function saveResultAndRedirect() {
+            let maxScore = Math.max(scores.a, scores.b, scores.c, scores.d);
+
+            // Stocker les scores dans localStorage
+            localStorage.setItem('a', scores.a);
+            localStorage.setItem('b', scores.b);
+            localStorage.setItem('c', scores.c);
+            localStorage.setItem('d', scores.d);
+
+            // Redirection vers la page de résultats
+            window.location.href = "Resultat.html";
+        }       
+
+        const audio = document.getElementById('background-music');
+
+        document.body.addEventListener('click', function() {
+        audio.play();
+        });
+    </script>
+
+
+</body>
+</html>

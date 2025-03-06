@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Fan Site - Arcko</title>
+
+    <link rel="icon" type="image/png" href="arcko.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+        body { 
+            font-family: 'Roboto', sans-serif;
+            margin: 0; 
+            padding: 0; 
+            background: url('fond.jpg') no-repeat center center/cover;
+            text-align: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* Espacement entre le titre et le bouton */
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 3em; /* Taille du titre augmentée */
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 255, 255, 0.5); /* Ombre plus prononcée */
+            animation: fadeIn 1.5s ease-in-out, slideUp 1.5s ease-out; /* Animation de fade-in et de remontée */
+            margin-top: 60px; /* Décalage vers le bas pour que le titre ne soit pas trop haut */
+        }
+        .mascotte {
+            width: 120px; /* Taille réduite de l'image */
+            position: absolute;
+            top: 20px;
+            right: 20px; /* Décalage vers la droite */
+            transition: transform 0.3s ease-in-out;
+            
+        }
+        .mascotte:hover {
+            transform: scale(1.15);
+            opacity: 0.8; /* Légère transparence pour éviter un effet de superposition */
+        }
+        .enter-btn {
+            margin-bottom: -200px; /* Légère marge en bas pour espacer du bas */
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border: none;
+            background: linear-gradient(135deg, #76c7c0, #3498db);
+            color: white;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: 0.4s;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 2s ease-in-out;
+        }
+        .enter-btn:hover {
+            background: linear-gradient(135deg, #85e3d0, #5dade2);
+            transform: scale(1.1);
+            box-shadow: 0px 8px 25px rgba(0, 255, 0, 0.7);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); }
+            to { transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+<body onclick="playMusic()" onscroll="playMusic()">
+    
+    <h1>Bienvenue dans le Monde des Pokémon !</h1>
+    <button class="enter-btn" onclick="window.location.href='Question.html'">Entrer</button>
+
+    <!-- Ajouter de la musique de fond avec un bouton pour la démarrer -->
+    <audio id="background-music" loop>
+        <source src="castelia.mp3" type="audio/mp3">
+        Ton navigateur ne supporte pas la lecture audio.
+    </audio>
+
+    <script>
+        const audio = document.getElementById('background-music');
+
+        document.body.addEventListener('click', function() {
+        audio.play();
+        });
+    </script>
+
+<a href="https://www.instagram.com/gasp_offrt/" target="_blank">
+    <img src="arcko.png" alt="arcko" class="mascotte">
+</a>
+</body>
+</html>

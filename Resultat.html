@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ton Pokémon de l'âme</title>
+    <link rel="icon" type="image/png" href="arcko.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('fond.jpg') no-repeat center center/cover;
+            animation: fadeInBackground 1s ease-in-out;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.5s ease-in-out;
+        }
+
+        .container {
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            text-align: center;
+            animation: fadeIn 1.5s forwards;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background 0.5s, color 0.5s;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            font-weight: 400;
+        }
+
+        .result img {
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 30px;
+            margin: 15px 0;
+            cursor: pointer;
+            font-size: 1.2em;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: scale(1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInBackground {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+        <div class="result" id="pokemon-result"></div>
+        <button onclick="retryQuiz()">Essayer à nouveau</button>
+    </div>
+
+    <audio id="background-music" loop>
+        <source src="castelia.mp3" type="audio/mp3">
+        Ton navigateur ne supporte pas la lecture audio.
+    </audio>
+    
+    <script>
+        // Récupérer les valeurs des variables
+        let a = parseInt(localStorage.getItem('a') || '0');
+        let b = parseInt(localStorage.getItem('b') || '0');
+        let c = parseInt(localStorage.getItem('c') || '0');
+        let d = parseInt(localStorage.getItem('d') || '0');
+
+        let result;
+        let background;
+        let containerColor;
+        let textColor;
+
+        // Comparer les valeurs pour déterminer le Pokémon et le texte associé
+
+        if (a > b && b > c && c > d) {
+            result = {
+                pokemon: "Engloutyran",
+                img: "engloutyran.gif",
+                text: "Lache la bouffe nan",
+                imageSize: "220px" // Taille spécifique de l'image
+            };
+            background = 'fondfeu.jpg';
+            containerColor = 'rgba(0, 0, 255, 0.3)';
+            textColor = '#ffb0b0';
+        } else if (a > b && b > d && d > c) {
+            result = {
+                pokemon: "Carchacrock",
+                img: "carchacrok.gif",
+                text: "Tu lache des crocs frérot, vriament t'approche pas de mon burger",
+                imageSize: "190px" // Taille spécifique de l'image
+            };
+            background = 'fondfeu.jpg';
+            containerColor = 'rgba(0, 0, 255, 0.3)';
+            textColor = '#ffb0b0';
+        } else if (a > c && c > b && b > d) {
+            result = {
+                pokemon: "Tyranocif",
+                img: "tyranocif.gif",
+                text: "Même Endritt à peur de toi. Bravo",
+                imageSize: "140px" // Taille spécifique de l'image
+            };
+            background = 'fondfeu.jpg';
+            containerColor = 'rgba(0, 0, 255, 0.3)';
+            textColor = '#ffb0b0';
+        } else if (a > c && c > d && d > b) {
+            result = {
+                pokemon: "Mackogneur",
+                img: "mackogneur.gif",
+                text: "Ok, t'es musclé, on le sait. Tu peux lacher la salle.",
+                imageSize: "150px" // Taille spécifique de l'image
+            };
+            background = 'fondfeu.jpg';
+            containerColor = 'rgba(0, 0, 255, 0.3)';
+            textColor = '#ffb0b0';
+        } else if (a > d && d > b && b > c) {
+            result = {
+                pokemon: "Dracaufeu",
+                img: "mascotte1.gif",
+                text: "Ok t'a un peu de flow, mais bon choix de pnj #zèropersonalité",
+                imageSize: "200px" // Taille spécifique de l'image
+            };
+            background = 'fondfeu.jpg';
+            containerColor = 'rgba(0, 0, 255, 0.3)';
+            textColor = '#ffb0b0';
+        } else if (a > d && d > c && c > b) {
+            result = {
+                pokemon: "Pyrobut",
+                img: "pyrobut.gif",
+                text: "Viens dans mon équipe au five, je t'en supplie me laisse pas avec Maiko",
+                imageSize: "100px" // Taille spécifique de l'image
+            };
+            background = 'fondfeu.jpg';
+            containerColor = 'rgba(0, 0, 255, 0.3)';
+            textColor = '#ffb0b0';
+
+
+        } else if (b > a && a > c && c > d) {
+            result = {
+                pokemon: "Lovedisc",
+                img: "lovedisc.gif",
+                text: "Ohhhh trop mignon, t'es ce lover. Par contre fais gaffe au Louise",
+                imageSize: "1000px" // Taille spécifique de l'image
+            };
+            background = 'fondeau.jpeg';
+            containerColor = 'rgba(0, 166, 255, 0.3)';
+            textColor = '#fba8ff';
+        } else if (b > a && a > d && d > c) {
+            result = {
+                pokemon: "Grotadmorv",
+                img: "grotadmorv.gif",
+                text: "T'es juste dégeulasse",
+                imageSize: "220px" // Taille spécifique de l'image
+            };
+            background = 'fondeau.jpeg';
+            containerColor = 'rgba(0, 166, 255, 0.3)';
+            textColor = '#fba8ff';
+        } else if (b > c && c > a && a > d) {
+            result = {
+                pokemon: "Ecremeuh",
+                img: "ecremeuh.gif",
+                text: "Laisse moi téter par pitié !!!!",
+                imageSize: "160px" // Taille spécifique de l'image
+            };
+            background = 'fondeau.jpeg';
+            containerColor = 'rgba(0, 166, 255, 0.3)';
+            textColor = '#fba8ff';
+        } else if (b > c && c > d && d > a) {
+            result = {
+                pokemon: "Metamorph",
+                img: "metamorph.gif",
+                text: "Wsh le roi des hypocrites, une personne = une nouvelle personalité",
+                imageSize: "120px" // Taille spécifique de l'image
+            };
+            background = 'fondeau.jpeg';
+            containerColor = 'rgba(0, 166, 255, 0.3)';
+            textColor = '#fba8ff';
+        } else if (b > d && d > a && a > c) {
+            result = {
+                pokemon: "Amphinobi",
+                img: "mascotte3.gif",
+                text: "Je sais qu'au fond t'a juste envie de fusionner avec un enfant de 14 ans.",
+                imageSize: "220px" // Taille spécifique de l'image
+            };
+            background = 'fondeau.jpeg';
+            containerColor = 'rgba(0, 166, 255, 0.3)';
+            textColor = '#fba8ff';
+        } else if (b > d && d > c && c > a) {
+            result = {
+                pokemon: "Muplodocus",
+                img: "muplodocus.gif",
+                text: "T'es gluant frérot, remet toi en question nan.",
+                imageSize: "120px" // Taille spécifique de l'image
+            };
+            background = 'fondplante.jpg';
+            containerColor = 'rgba(29, 160, 100, 0.5)';
+            textColor = '#ffabcc';
+
+
+
+        } else if (c > a && a > b && b > d) {
+            result = {
+                pokemon: "Giratina",
+                img: "mascotte10.gif",
+                text: "Tu crois tu vis comme un roi dans ton propre monde. T'as juste pas d'ami.",
+                imageSize: "180px" // Taille spécifique de l'image
+            };
+            background = 'fondlegende.jpg';
+            containerColor = 'rgba(29, 160, 100, 0.5)';
+            textColor = '#ffabcc';
+        } else if (c > a && a > d && d > b) {
+            result = {
+                pokemon: "Ronflex",
+                img: "ronflex.gif",
+                text: "T'es un gros porc qui fais que dormir, change un peu ou le diabète te guette.",
+                imageSize: "160px" // Taille spécifique de l'image
+            };
+            background = 'fondplante.jpg';
+            containerColor = 'rgba(29, 160, 100, 0.5)';
+            textColor = '#ffabcc';
+        } else if (c > b && b > a && a > d) {
+            result = {
+                pokemon: "Sucreine",
+                img: "sucreine.gif",
+                text: "T'es une vraie abd bitch, félicitation.",
+                imageSize: "140px" // Taille spécifique de l'image
+            };
+            background = 'fondplante.jpg';
+            containerColor = 'rgba(29, 160, 100, 0.5)';
+            textColor = '#ffabcc';
+        } else if (c > b && b > d && d > a) {
+            result = {
+                pokemon: "Gardevoir",
+                img: "gardevoir.gif",
+                text: "Franchement hein..... je te smash tous les jours.",
+                imageSize: "150px" // Taille spécifique de l'image
+            };
+            background = 'fondplante.jpg';
+            containerColor = 'rgba(29, 160, 100, 0.5)';
+            textColor = '#ffabcc';
+        } else if (c > d && d > a && a > b) {
+            result = {
+                pokemon: "Boustiflor",
+                img: "boustiflor.gif",
+                text: "Lache les bites, c'est haram.",
+                imageSize: "200px" // Taille spécifique de l'image
+            };
+            background = 'fondplante.jpg';
+            containerColor = 'rgba(29, 160, 100, 0.5)';
+            textColor = '#ffabcc';
+        } else if (c > d && d > b && b > a) {
+            result = {
+                pokemon: "Démolosse",
+                img: "demolosse.gif",
+                text: "T'es en chien frérot, chill.",
+                imageSize: "120px" // Taille spécifique de l'image
+            };
+            background = 'fondplante.jpg';
+            containerColor = 'rgba(29, 160, 100, 0.5)';
+            textColor = '#ffabcc';
+        
+
+
+        } else if (d > a && a > b && b > c) {
+            result = {
+                pokemon: "Lucario",
+                img: "lucario.gif",
+                text: "Rien à dire, t'es le roi de l'aura.",
+                imageSize: "100px" // Taille spécifique de l'image
+            };
+            background = 'fondelec.png';
+            containerColor = 'rgba(51, 98, 173, 0.3)';
+            textColor = '#ffc7ee';
+        } else if (d > a && a > c && c > b) {
+            result = {
+                pokemon: "Mewtwo",
+                img: "mewtwo.gif",
+                text: "Nan nan t'es pas ce manipulateur, lâche ça.",
+                imageSize: "100px" // Taille spécifique de l'image
+            };
+            background = 'fondelec.png';
+            containerColor = 'rgba(51, 98, 173, 0.3)';
+            textColor = '#ffc7ee';
+        } else if (d > b && b > a && a > c) {
+            result = {
+                pokemon: "Tetampoule",
+                img: "tetampoule.gif",
+                text: "Eureka!!!!! Tu viens surement de trouver un nouveau théorème de maths.",
+                imageSize: "80px" // Taille spécifique de l'image
+            };
+            background = 'fondelec.png';
+            containerColor = 'rgba(51, 98, 173, 0.3)';
+            textColor = '#ffc7ee';
+        } else if (d > b && b > c && c > a) {
+            result = {
+                pokemon: "Psykokwak",
+                img: "psykokwak.gif",
+                text: "T'as mal à la tête? J'ai des dolipranes si tu veux",
+                imageSize: "140px" // Taille spécifique de l'image
+            };
+            background = 'fondelec.png';
+            containerColor = 'rgba(51, 98, 173, 0.3)';
+            textColor = '#ffc7ee';
+        } else if (d >  c&& c > a && a > b) {
+            result = {
+                pokemon: "Pikachu",
+                img: "pika.gif",
+                text: "Rohh, t'es trop mignon. Je peux te croquer stp",
+                imageSize: "220px" // Taille spécifique de l'image
+            };
+            background = 'fondelec.png';
+            containerColor = 'rgba(51, 98, 173, 0.3)';
+            textColor = '#ffc7ee';
+        } else if (d > c && c > b && b > a) {
+            result = {
+                pokemon: "Lockpin",
+                img: "lockpin.gif",
+                text: "Un conseil, fais gaffe au gens autour de toi. Tu sais pas ce qu'il font en pensant à toi tard le soir",
+                imageSize: "120px" // Taille spécifique de l'image
+            };
+            background = 'fondelec.png';
+            containerColor = 'rgba(51, 98, 173, 0.3)';
+            textColor = '#ffc7ee';
+
+
+        } else if (a === b && (b > c || b > d) ) {
+            result = {
+                pokemon: "Rayquaza",
+                img: "mascotte9.gif",
+                text: "La légende dis que t'as un rayquaza shiny qui dors dans ton caleçon!!!",
+                imageSize: "160px" // Taille spécifique de l'image,
+            };
+            background = 'fondarceus.jpg';
+            containerColor = 'rgba(171, 147, 0, 0.3)';
+            textColor = '#fff4BD';
+        } else if (a === c && ( a > d || a > b)) {
+            result = {
+                pokemon: "Gromago",
+                img: "gromago.gif",
+                text: "Bravo!!! Veuillez accueillir le roi des juifs. T'aurais pas 5€ stp?",
+                imageSize: "130px" // Taille spécifique de l'image,
+            };
+            background = 'fondarceus.jpg';
+            containerColor = 'rgba(171, 147, 0, 0.3)';
+            textColor = '#fff4BD';
+        } else if (a === d && ( a > b || a > c)) {
+            result = {
+                pokemon: "Limonde de Merde",
+                img: "limonde.gif",
+                text: "je te hais, tu te hais tous le monde te hait. Meurs stp.",
+                imageSize: "180px" // Taille spécifique de l'image,
+            };
+            background = 'fondarceus.jpg';
+            containerColor = 'rgba(171, 147, 0, 0.3)';
+            textColor = '#fff4BD';
+        } else if (b === c && (b > a || b > d)) {
+            result = {
+                pokemon: "Lippoutou",
+                img: "lippoutou.gif",
+                text: "Une mama africaine comme on en a jamais vu. EEHhh passe moi le poulet la!!!!",
+                imageSize: "180px" // Taille spécifique de l'image,
+            };
+            background = 'fondarceus.jpg';
+            containerColor = 'rgba(171, 147, 0, 0.3)';
+            textColor = '#fff4BD';
+        } else if (a === d && d === b) {
+            result = {
+                pokemon: "Arceus",
+                img: "arceus.gif",
+                text: "Bravo. Tu es officielment Dieu. Regarde tous les autre de haut maintenant.",
+                imageSize: "160px" // Taille spécifique de l'image,
+            };
+            background = 'fondarceus.jpg';
+            containerColor = 'rgba(171, 147, 0, 0.3)';
+            textColor = '#fff4BD';
+        } else if (a === c && c === d) {
+            result = {
+                pokemon: "Rattata",
+                img: "rattata.gif",
+                text: "Bravo. Tu es officielment nul a chier. Arrête la vie c mieux.",
+                imageSize: "100px" // Taille spécifique de l'image,
+            };
+            background = 'fondarceus.jpg';
+            containerColor = 'rgba(171, 147, 0, 0.3)';
+            textColor = '#fff4BD';
+        
+
+        } else if (a === b && b === c ) {
+            result = {
+                pokemon: "Angoliath",
+                img: "angoliath.gif",
+                text: "Désolé..... mais tu es devenue Tiafoe. Abandonne tout espoir car même Dieu t'a abandonné. On priera pour ton âme.",
+                imageSize: "180px" // Taille spécifique de l'image,
+            };
+            background = 'max.jpeg';
+            containerColor = 'rgba(0, 0, 0, 0)';
+            textColor = '#002c40';
+        } else if (b === c && c === d) {
+            result = {
+                pokemon: "Jungko",
+                img: "jungko.gif",
+                text: "Je t'aime. T'es parfait.",
+                imageSize: "160px" // Taille spécifique de l'image,
+            };
+            background = 'jungko.jpg';
+            containerColor = 'rgba(0, 0, 0, 0)';
+            textColor = '#006a13';
+
+        } else {
+            result = {
+                pokemon: "Keunotor",
+                img: "keunotor.gif",
+                text: "Tu es Keunotor. Rien d'autre à dire.",
+                imageSize: "140px" // Taille spécifique de l'image,
+            };  // Cas par défaut
+            background = 'fondkeunotor.jpg';
+            containerColor = 'rgba(0, 0, 0, 0)';
+            textColor = '#0078b0';
+        }
+
+        // Afficher les résultats avec la taille d'image spécifique
+        document.getElementById('pokemon-result').innerHTML = `  
+            <div><strong>Ton Pokémon de l'âme est ${result.pokemon} !</strong></div>
+            <img src="${result.img}" alt="${result.pokemon}" style="max-width: ${result.imageSize};">
+            <div>${result.text}</div>
+        `;
+
+        document.body.style.background = `url('${background}') no-repeat center center/cover`;
+        document.getElementById('container').style.background = containerColor;
+        document.getElementById('container').style.color = textColor;
+
+        // Fonction pour recommencer le quiz
+        function retryQuiz() {
+            localStorage.clear();
+            window.location.href = 'Accueil.html'; // Redirige vers la première page
+        }
+
+        const audio = document.getElementById('background-music');
+
+        document.body.addEventListener('click', function() {
+        audio.play();
+        });
+    </script>
+
+</body>
+</html>
