@@ -146,10 +146,10 @@
             <div class="question hidden" id="q2">
                 <p>2. Où aimerais-tu vivre ?</p>
                 <div class="answers">
-                    <button class="answer-btn" onclick="nextQuestion(2, 'a')">🏕️ Dans la nature</button>
-                    <button class="answer-btn" onclick="nextQuestion(2, 'b')">🏙️ En ville</button>
-                    <button class="answer-btn" onclick="nextQuestion(2, 'c')">🏔️ En montagne</button>
-                    <button class="answer-btn" onclick="nextQuestion(2, 'd')">🏖️ Sur une île</button>
+                    <button class="answer-btn" onclick="nextQuestion(2, 'c')">🏕️ Dans la nature</button>
+                    <button class="answer-btn" onclick="nextQuestion(2, 'd')">🏙️ En ville</button>
+                    <button class="answer-btn" onclick="nextQuestion(2, 'a')">🏔️ En montagne</button>
+                    <button class="answer-btn" onclick="nextQuestion(2, 'b')">🏖️ Sur une île</button>
                 </div>
             </div>
 
@@ -157,9 +157,9 @@
                 <p>3. Comment réagis-tu face à un défi ?</p>
                 <div class="answers">
                     <button class="answer-btn" onclick="nextQuestion(3, 'a')">⚔️ Je fonce !</button>
-                    <button class="answer-btn" onclick="nextQuestion(3, 'b')">🧠 Je réfléchis avant d’agir</button>
+                    <button class="answer-btn" onclick="nextQuestion(3, 'd')">🧠 Je réfléchis avant d’agir</button>
                     <button class="answer-btn" onclick="nextQuestion(3, 'c')">🤝 Je cherche de l’aide</button>
-                    <button class="answer-btn" onclick="nextQuestion(3, 'd')">😎 J’improvise</button>
+                    <button class="answer-btn" onclick="nextQuestion(3, 'b')">😎 J’improvise</button>
                 </div>
             </div>
 
@@ -167,9 +167,9 @@
                 <p>4. Quelle est ta plus grande qualité ?</p>
                 <div class="answers">
                     <button class="answer-btn" onclick="nextQuestion(4, 'a')">💪 Courage</button>
-                    <button class="answer-btn" onclick="nextQuestion(4, 'b')">🧠 Intelligence</button>
+                    <button class="answer-btn" onclick="nextQuestion(4, 'd')">🧠 Intelligence</button>
                     <button class="answer-btn" onclick="nextQuestion(4, 'c')">❤️ Gentillesse</button>
-                    <button class="answer-btn" onclick="nextQuestion(4, 'd')">🎭 Créativité</button>
+                    <button class="answer-btn" onclick="nextQuestion(4, 'b')">🎭 Créativité</button>
                 </div>
             </div>
             
@@ -236,18 +236,18 @@
             <div class="question hidden" id="q11">
                 <p>11. Si tu devais partir en voyage Pokémon, où irais-tu :</p>
                 <div class="answers">
-                    <button class="answer-btn" onclick="nextQuestion(11,'a')">Une île tropicale 🌴</button>
+                    <button class="answer-btn" onclick="nextQuestion(11,'b')">Une île tropicale 🌴</button>
                     <button class="answer-btn" onclick="nextQuestion(11,'d')">Une grande ville animée 🏙️</button>
                     <button class="answer-btn" onclick="nextQuestion(11,'c')">Une forêt mystérieuse 🌲</button>
-                    <button class="answer-btn" onclick="nextQuestion(11,'b')">Une montagne enneigée ❄️</button>
+                    <button class="answer-btn" onclick="nextQuestion(11,'a')">Une montagne enneigée ❄️</button>
                 </div>
             </div>
 
             <div class="question hidden" id="q12">
                 <p>12. Si tu pouvais vivre dans un des lieux emblématiques du monde Pokémon, lequel choisirais-tu :</p>
                 <div class="answers">
-                    <button class="answer-btn" onclick="nextQuestion(12,'a')">Bourg Palette (un endroit paisible pour commencer une aventure) 🌿</button>
-                    <button class="answer-btn" onclick="nextQuestion(12,'b')">Lavanville (une ville sinistre) 🌆</button>
+                    <button class="answer-btn" onclick="nextQuestion(12,'b')">Bourg Palette (un endroit paisible pour commencer une aventure) 🌿</button>
+                    <button class="answer-btn" onclick="nextQuestion(12,'a')">Lavanville (une ville sinistre) 🌆</button>
                     <button class="answer-btn" onclick="nextQuestion(12,'c')">Cimetronelle (en pleine nature, dans les arbres) 🌳</button>
                     <button class="answer-btn" onclick="nextQuestion(12,'d')">Illumis (une grande ville avec beaucoup de culture) 🎭</button>
                 </div>
@@ -276,9 +276,9 @@
             <div class="question hidden" id="q15">
                 <p>15. Si tu devais choisir un starter parmi ces classiques, lequel prendrais-tu :</p>
                 <div class="answers">
-                    <button class="answer-btn" onclick="nextQuestion(15,'a')">Ouisticram</button>
-                    <button class="answer-btn" onclick="nextQuestion(15,'b')">Grenouss</button>
-                    <button class="answer-btn" onclick="nextQuestion(15,'c')">Arcko</button>
+                    <button class="answer-btn" onclick="nextQuestion(15,'a')">Gruikui</button>
+                    <button class="answer-btn" onclick="nextQuestion(15,'b')">Otaquin</button>
+                    <button class="answer-btn" onclick="nextQuestion(15,'c')">Germignon</button>
                     <button class="answer-btn" onclick="nextQuestion(15,'d')">Pikachu</button>
                 </div>
             </div>
@@ -289,6 +289,10 @@
     <script>
         let scores = { a: 0, b: 0, c: 0, d: 0 };
         const totalQuestions = 15;
+
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 10) + 1; // Génère un nombre entre 1 et 10
+        }
 
         const mascottesDimensions = {
             1: { width: 100, height: 20 },
@@ -342,7 +346,7 @@
     }
 
     function nextQuestion(questionNumber, answer) {
-        scores[answer] += questionNumber;
+        scores[answer] += getRandomNumber();
 
         // Stocker le score dans localStorage
         localStorage.setItem(answer, scores[answer]);
